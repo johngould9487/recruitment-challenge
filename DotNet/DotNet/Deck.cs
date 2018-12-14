@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotNet
 {
@@ -10,7 +12,7 @@ namespace DotNet
         private readonly string id;
 
         public Card[] Cards { get; }
-
+        public IEnumerable<Card> downFacingCards;
 
         public Deck(int numJokers)
         {
@@ -34,6 +36,7 @@ namespace DotNet
             {
                 Cards[k] = new Joker(id);
             }
+            downFacingCards = Cards;
         }
 
         public Deck() : this(0) { }
@@ -42,6 +45,11 @@ namespace DotNet
         {
             this.id = id;
             this.Cards = cards;
+        }
+
+        public void RefreshDownFacingCards()
+        {
+            downFacingCards = downFacingCards.Where(card => !card._turnedUp);
         }
     }
 }

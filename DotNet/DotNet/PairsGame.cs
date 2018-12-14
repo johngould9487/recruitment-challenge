@@ -16,7 +16,7 @@ namespace DotNet
     public class PairsGame : Game
     {
         public Deck _deck;
-        public IEnumerable<Player> _players;
+        public Player[] _players;
         public GameDisplay _gameDisplay;
 
         public PairsGame()
@@ -44,16 +44,25 @@ namespace DotNet
             return this;
         }
 
-
         public Game Deal()
         {
             return this;
         }
 
-
         public async Task Start()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _players.Length; i++)
+            {
+                _players[i].ChooseDownFacingCard(_deck);
+                _players[i].ChooseDownFacingCard(_deck);
+                bool trickMade = _players[i].CheckForTricks();
+                if (trickMade) i--;
+                else
+                {
+                    _players[i].TurnCurrentCardsOver();
+                }
+                _players[i].UseCurrentCards();
+            }
         }
 
         public Task<Player> Winner()
