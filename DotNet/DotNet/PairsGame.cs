@@ -19,20 +19,28 @@ namespace DotNet
         public IEnumerable<Player> _players;
         public GameDisplay _gameDisplay;
 
-        public PairsGame(Deck deck, GameDisplay gameDisplay)
+        public PairsGame()
         {
-            _deck = deck;
-            _gameDisplay = gameDisplay;
+            _deck = new Deck(0);
         }
 
         public Game Shuffle()
         {
+            Random rng = new Random();
+            for (int i = 0; i < _deck.Cards.Length; i++)
+            {
+                int randomIndex = rng.Next(_deck.Cards.Length);
+                Card temporaryHold = _deck.Cards[i];
+                _deck.Cards[i] = _deck.Cards[randomIndex];
+                _deck.Cards[randomIndex] = temporaryHold;
+            }
             return this;
         }
 
         public Game Assign(Player[] players)
         {
             _players = players;
+            _gameDisplay = new GameDisplay(_deck, _players);
             return this;
         }
 
