@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 
 namespace DotNet
@@ -14,6 +15,15 @@ namespace DotNet
 
     public class PairsGame : Game
     {
+        public Deck _deck;
+        public IEnumerable<Player> _players;
+        public GameDisplay _gameDisplay;
+
+        public PairsGame(Deck deck, GameDisplay gameDisplay)
+        {
+            _deck = deck;
+            _gameDisplay = gameDisplay;
+        }
 
         public Game Shuffle()
         {
@@ -22,6 +32,7 @@ namespace DotNet
 
         public Game Assign(Player[] players)
         {
+            _players = players;
             return this;
         }
 
