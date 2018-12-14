@@ -7,6 +7,7 @@ namespace DotNet
         public Suit? Suit { get; }
         public Rank? Rank { get; }
         public string DeckId { get; }
+        public bool _turnedUp;
 
         public Card(Suit? suit, Rank? rank, String deckId)
         {
@@ -29,6 +30,11 @@ namespace DotNet
         public override int GetHashCode()
         {
             return (Suit == null ? 32 : Suit.GetHashCode()) ^ (Rank == null ? 3 : Rank.GetHashCode()) * DeckId.GetHashCode();
+        }
+
+        public void TurnOver()
+        {
+            _turnedUp = !_turnedUp;
         }
     }
 }

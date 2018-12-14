@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DotNet
 {
     public class Player
     {
         private readonly string id;
-        private readonly ISet<Card> currentCards;
+        private readonly List<Card> currentCards;
 
         public Player(string id)
         {
             this.id = id;
-            currentCards = new HashSet<Card>();
+            currentCards = new List<Card>();
         }
 
         public Player Receive(Card card)
@@ -33,6 +34,32 @@ namespace DotNet
         public override string ToString()
         {
             return $"player-{id}";
+        }
+
+        public void ChooseDownFacingCard(Deck deck)
+        {
+            Random rng = new Random();
+            int randomIndex = rng.Next(deck.downFacingCards.Count());
+            Receive(deck.downFacingCards.Skip(randomIndex).First());
+            deck.downFacingCards.Skip(randomIndex).First().TurnOver();
+            deck.RefreshDownFacingCards();
+        }
+
+        public bool CheckForTricks()
+        {
+            return currentCards[0].Rank == currentCards[1].Rank;
+        }
+
+        public void TurnCurrentCardsOver()
+        {
+            currentCards[0].TurnOver();
+            currentCards[1].TurnOver();
+        }
+
+        public void UseCurrentCards()
+        {
+            Use(currentCards[0]);
+            Use(currentCards[0]);
         }
     }
 }
