@@ -7,12 +7,14 @@ namespace DotNet
     public class Player
     {
         private readonly string id;
-        private readonly List<Card> currentCards;
+        public readonly List<Card> currentCards;
+        public int NumberOfTricks { get; private set; }
 
         public Player(string id)
         {
             this.id = id;
             currentCards = new List<Card>();
+            NumberOfTricks = 0;
         }
 
         public Player Receive(Card card)
@@ -36,13 +38,15 @@ namespace DotNet
             return $"player-{id}";
         }
 
-        public void ChooseDownFacingCard(Deck deck)
+        public Card ChooseDownFacingCard(Deck deck)
         {
             Random rng = new Random();
             int randomIndex = rng.Next(deck.downFacingCards.Count());
-            Receive(deck.downFacingCards.Skip(randomIndex).First());
-            deck.downFacingCards.Skip(randomIndex).First().TurnOver();
+            Card card = deck.downFacingCards.Skip(randomIndex).First();
+            Receive(card);
+            card.TurnOver();
             deck.RefreshDownFacingCards();
+            return card;
         }
 
         public bool CheckForTricks()
@@ -60,6 +64,11 @@ namespace DotNet
         {
             Use(currentCards[0]);
             Use(currentCards[0]);
+        }
+
+        public void IncrementTricks()
+        {
+            NumberOfTricks += 1;
         }
     }
 }

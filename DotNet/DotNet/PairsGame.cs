@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace DotNet
@@ -51,17 +52,36 @@ namespace DotNet
 
         public async Task Start()
         {
-            for (int i = 0; i < _players.Length; i++)
+            _gameDisplay.Update();
+            int count = 0;
+            Card firstCard, secondCard;
+            bool condition = count < 1000 || _deck.downFacingCards.Any();
+            while (condition)
             {
-                _players[i].ChooseDownFacingCard(_deck);
-                _players[i].ChooseDownFacingCard(_deck);
-                bool trickMade = _players[i].CheckForTricks();
-                if (trickMade) i--;
-                else
+                for (int i = 0; i < _players.Length; i++)
                 {
-                    _players[i].TurnCurrentCardsOver();
+                    _gameDisplay.PromptUser();
+                    firstCard = _players[i].ChooseDownFacingCard(_deck);
+                    _gameDisplay.Update();
+                    _gameDisplay.ShowChosenCard(firstCard, _players[i]);
+                    _gameDisplay.PromptUser();
+                    secondCard = _players[i].ChooseDownFacingCard(_deck);
+                    _gameDisplay.Update();
+                    _gameDisplay.ShowChosenCard(secondCard, _players[i]);
+                    bool trickMade = _players[i].CheckForTricks();
+                    if (trickMade)
+                    {
+                        _players[i].IncrementTricks();
+                        _gameDisplay.DisplayTrick(_players[i]);
+                    }
+                    else
+                    {
+                        _players[i].TurnCurrentCardsOver();
+                    }
+                    _players[i].UseCurrentCards();
+                    if (trickMade) i--;
                 }
-                _players[i].UseCurrentCards();
+                count++;
             }
         }
 
