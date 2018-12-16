@@ -82,7 +82,7 @@ namespace DotNet
                     if (trickMade) i--;
                 }
                 count++;
-                condition = count < 2 && _deck.downFacingCards.Any();
+                condition = count < 100 && _deck.downFacingCards.Any();
             }
             Player winner = await Winner();
             _gameDisplay.DeclareWinner(winner);
