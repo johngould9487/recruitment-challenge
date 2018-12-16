@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace DotNet.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class CardTest
     {
-        [TestMethod]
+        [Test]
         public void ShouldImplementHashCodeAndEquals()
         {
             Card sut1 = new Card(Suit.CLUBS, Rank.ACE, "deck id");

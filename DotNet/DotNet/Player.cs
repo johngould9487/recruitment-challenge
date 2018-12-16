@@ -62,8 +62,10 @@ namespace DotNet
 
         public void UseCurrentCards()
         {
-            Use(currentCards[0]);
-            Use(currentCards[0]);
+            foreach (var card in currentCards)
+            {
+                Use(card);
+            }
         }
 
         public void IncrementTricks()

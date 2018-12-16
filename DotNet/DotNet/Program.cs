@@ -9,7 +9,7 @@ namespace DotNet
             Task winner = new PairsGame().Assign(new Player[]
             {
                 new Player("John"),
-                new Player("Muna"),
+                new Player("Muna")
             }).Shuffle().Start();
 
         }

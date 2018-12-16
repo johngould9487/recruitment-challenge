@@ -38,6 +38,11 @@ namespace DotNet
             return this;
         }
 
+        public Player[] GetPlayers()
+        {
+            return _players;
+        }
+
         public Game Assign(Player[] players)
         {
             _players = players;
