@@ -62,9 +62,9 @@ namespace DotNet
 
         public void UseCurrentCards()
         {
-            foreach (var card in currentCards)
+            while (currentCards.Any())
             {
-                Use(card);
+                Use(currentCards[0]);
             }
         }
 
