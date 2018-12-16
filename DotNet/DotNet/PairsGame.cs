@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 
 namespace DotNet
@@ -45,17 +45,12 @@ namespace DotNet
             return this;
         }
 
-        public Game Deal()
-        {
-            return this;
-        }
-
         public async Task Start()
         {
             _gameDisplay.Update();
             int count = 0;
             Card firstCard, secondCard;
-            bool condition = count < 1000 || _deck.downFacingCards.Any();
+            bool condition = true;
             while (condition)
             {
                 for (int i = 0; i < _players.Length; i++)
@@ -82,12 +77,19 @@ namespace DotNet
                     if (trickMade) i--;
                 }
                 count++;
+                condition = count < 2 && _deck.downFacingCards.Any();
             }
+            Player winner = await Winner();
+            _gameDisplay.DeclareWinner(winner);
         }
 
         public Task<Player> Winner()
         {
-            throw new NotImplementedException();
+            return Task.Run(() =>
+            {
+                Player winner = _players.OrderBy(player => player.NumberOfTricks).First();
+                return winner;
+            });
         }
     }
 }

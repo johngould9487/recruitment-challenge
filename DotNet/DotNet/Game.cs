@@ -6,7 +6,6 @@ namespace DotNet
     {
         Game Shuffle();
         Game Assign(Player[] players);
-        Game Deal();
         Task Start();
         Task<Player> Winner();
     }

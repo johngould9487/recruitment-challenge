@@ -46,5 +46,15 @@ namespace DotNet
         {
             Console.WriteLine($"{player.ToString()} chose the {card.ToString()}");
         }
+
+        public void DeclareWinner(Player winner)
+        {
+            Console.Clear();
+            foreach (var player in _players)
+            {
+                Console.WriteLine($"{player.ToString()} has {player.NumberOfTricks} tricks");
+            }
+            Console.WriteLine($"{winner} has won the game!!!");
+        }
     }
 }
